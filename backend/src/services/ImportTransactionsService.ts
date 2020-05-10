@@ -1,5 +1,5 @@
 import { getCustomRepository, getRepository, In } from 'typeorm';
-import csvParse from 'csv-parse';
+import csvParse from 'csv-parse'; // lib to manipulate csv file
 import fs from 'fs'; // file system to open and read file
 
 import Transaction from '../models/Transaction';
@@ -47,11 +47,17 @@ class ImportTransactionsService {
 
     await new Promise(resolve => parseCSV.on('end', resolve));
 
+    // console.log(categories);
+    // console.log(transactions);
+
     const existentCategories = await categoriesRepository.find({
       where: {
         title: In(categories),
       },
     });
+
+    // console.log(existentCategories);
+    // console.log(transactions);
 
     const existentCategoriesTitles = existentCategories.map(
       (category: Category) => category.title,

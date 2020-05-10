@@ -20,6 +20,7 @@ class CreateTransactionService {
     type,
     category,
   }: Request): Promise<Transaction> {
+    // instantiating repository
     const transactionsRepository = getCustomRepository(TransactionsRepository);
     // check if categury exists > search and use return id
     const categoryRepository = getRepository(Category);
@@ -31,6 +32,7 @@ class CreateTransactionService {
       throw new AppError('You do not have enough balance');
     }
 
+    // let allows this to be rewritten
     let transactionCategory = await categoryRepository.findOne({
       where: {
         title: category,
